@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work in progress!</title>
+    <style>
+      /* General Body and Page Styling */
+      body {
+        font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: rgb(4, 4, 4);
+        color: rgb(255, 248, 235);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      /* The main content box */
+      .content-card {
+        background-color: rgba(38, 25, 3, 0.8);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        max-width: 90%;
+        width: 600px;
+        animation: fadeIn 1.5s ease-out;
+        color: rgb(255, 248, 235);
+      }
+
+      /* Main Heading */
+      .title {
+        font-size: 3em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: rgb(255, 248, 235);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Main description text */
+      .description {
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        color: rgb(255, 248, 235);
+      }
+
+      /* The "check back soon" message */
+      .footer-note {
+        font-size: 1.1em;
+        margin-top: 30px;
+      }
+
+      /* Fade-in animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive styles for smaller screens */
+      @media (max-width: 768px) {
+        .content-card {
+          padding: 25px;
+        }
+
+        .title {
+          font-size: 2.5em;
+        }
+
+        .description,
+        .footer-note {
+          font-size: 1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-card">
+      <h1 class="title">Work in progress!</h1>
+      <p class="description"> We're busy building something amazing for you. Our website is not available at the moment. </p>
+      <p> We appreciate your patience and can't wait to show you what we're working on! </p>
+      <div class="footer-note">
+        <p>Please check back soon!</p>
+      </div>
+    </div>
+  </body>
+</html>
