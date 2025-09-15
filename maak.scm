@@ -34,7 +34,6 @@
 
 (define (deploy)
   "Deploy the project."
-  (build)
   (delete-file-recursively (~ "~a/index.html" deploy-dir))
   (mkdir-p (~ "~a" deploy-dir))
   ($ (list "cp -rfv index.html" (~ "~a/" deploy-dir))))
