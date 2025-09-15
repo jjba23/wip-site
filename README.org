@@ -1,5 +1,4 @@
-#+title: WIP Site Template
-
+#+title: WIP (Work in Progress) Site 
 
 Simple HTML website for pages under construction or maintenance with no dependencies.
 
