@@ -1,0 +1,6 @@
+#+title: WIP Site Template
+
+
+Simple HTML website for pages under construction or maintenance with no dependencies.
+
+Licensed under the GNU Affero General Public License v3 or newer.
