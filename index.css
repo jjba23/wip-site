@@ -1,0 +1,87 @@
+.underline {
+	text-decoration: underline
+}
+
+body {
+	font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+	background: #111827;
+	 background: -webkit-linear-gradient(to right, #111827 40%, #2d3436);
+	 background: linear-gradient(to right, #111827 40%, #2d3436);
+
+	color: rgb(255, 248, 235);
+	min-height: 100vh;
+}
+
+.content-card {
+	background-color: rgba(38, 25, 3, 0.3);
+	padding: 40px;
+	border-radius: 2em;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+	animation: fadeIn 1.5s ease-out;
+	color: rgb(255, 248, 235);
+}
+
+.title {
+	font-size: 3em;
+	margin-top: 0;
+	margin-bottom: 15px;
+	color: rgb(255, 248, 235);
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.description {
+	font-size: 1.4em;
+	line-height: 1.6;
+	margin-bottom: 25px;
+	color: rgb(255, 248, 235);
+}
+
+.footer-note {
+	font-size: 1.4em;
+	margin-top: 30px;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (max-width: 768px) {
+	.content-card {
+		padding: 25px;
+	}
+
+	.title {
+		font-size: 2.6em;
+	}
+
+	.description,
+	.footer-note {
+		font-size: 1.2em;
+	}
+}
+
+.extra-small {
+    font-weight: light;
+    font-size: 0.8em;
+}
+
+.flex{
+display: flex}
+.flex-col{flex-direction:column}
+.justify-center{justify-content: center}
+.justify-between{justify-content: space-between}
+.align-center{align-content: center}
+.items-center{align-items: center}
+.pt-12 { padding-top: 12em}
+.mt-12 { margin-top: 12em}
