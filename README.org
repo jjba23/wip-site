@@ -2,11 +2,14 @@
 #+author: Josep Bigorra
 #+email: jjbigorra@gmail.com
 
-Simplest vanilla HTML & CSS website for pages under construction or maintenance - no external dependencies.
+Simplest minimalistic vanilla HTML & CSS website for pages under construction or maintenance - no external dependencies.
 
-Imagine your company website is down, the placeholder page has /one critical job/: to load instantly, for everyone, every single time, and convey a clear message.
+Imagine your company website is down, the placeholder page has /one critical job/: to load *instantly*, for everyone, every single time, and convey a clear message.
 
-Anything that could possibly interfere with that job is a liability.
+See the latest version of wip-site here:
+
+https://wip-site.jointhefreeworld.org/
+
 
 * Motivation and goals of this project
 
