@@ -1,5 +1,23 @@
 #+title: WIP (Work in Progress) Site 
+#+author: Josep Bigorra
+#+email: jjbigorra@gmail.com
 
-Simple HTML website for pages under construction or maintenance with no dependencies.
+Simplest vanilla HTML & CSS website for pages under construction or maintenance - no external dependencies.
 
-Licensed under the GNU Affero General Public License v3 or newer.
+Imagine your company website is down, the placeholder page has /one critical job/: to load instantly, for everyone, every single time, and convey a clear message.
+
+Anything that could possibly interfere with that job is a liability.
+
+* Motivation and goals of this project
+
+Ultimate Portability: A single vanilla HTML file is the most portable web document in existence. It can be hosted on any web server (Apache, Nginx, etc.) with zero configuration. You can even open it directly from your computer's file system and it will look perfect.
+
+Zero JavaScript Errors: By loading only some sprinkles of optional, free JavaScript, you eliminate an entire category of potential problems by not depending on bloated Javascript frameworks of the day.
+
+Effortless Deployment: You don't need a complex deployment pipeline, a build step, or command-line tools for wip-site. You just upload some files. This means :
+
+/anyone, regardless of technical skill, should be able to put the site into maintenance mode/
+
+* Licensing
+
+wip-site is free software, licensed under the GNU Affero General Public License v3 or newer.
