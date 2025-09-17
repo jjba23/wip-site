@@ -24,7 +24,7 @@
 
 ;; The absolute path to the directory where the main project files will be deployed.
 (define deploy-dir
-  "/srv/http/jointhefreeworld.org/wip-site")
+  "/srv/http/wip-site.jointhefreeworld.org")
 
 ;; ====== Maak tasks ======
 
