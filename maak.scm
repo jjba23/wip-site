@@ -36,4 +36,5 @@
   "Deploy the project."
   (delete-file-recursively (~ "~a/index.html" deploy-dir))
   (mkdir-p (~ "~a" deploy-dir))
-  ($ (list "cp -rfv index.html" (~ "~a/" deploy-dir))))
+  ($ (list "cp -rfv index.html" (~ "~a/" deploy-dir)))
+  ($ (list "cp -rfv index.css" (~ "~a/" deploy-dir))))
