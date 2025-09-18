@@ -28,8 +28,8 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #111827;
-	background: -webkit-linear-gradient(to right, #111827 40%, #2d3436);
-	background: linear-gradient(to right, #111827 40%, #2d3436);
+	background: -webkit-linear-gradient(to right, #111827 30%, #2d3436);
+	background: linear-gradient(to right, #111827 30%, #2d3436);
 
 	color: rgb(255, 248, 235);
 	min-height: 100vh;
@@ -127,4 +127,8 @@ body {
 
 .mt-12 {
 	margin-top: 12em
+}
+
+.source-link {
+    color: rgb(200, 200, 200, 0.8);
 }
