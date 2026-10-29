@@ -1,26 +1,210 @@
-#+title: WIP (Work in Progress) Site 
+#+title: wip-site — a maintenance page that looks deliberate
 #+author: Josep Bigorra
 #+email: jjbigorra@gmail.com
+#+startup: showall
 
-Simplest minimalistic vanilla HTML & CSS website for pages under construction or maintenance - no external dependencies.
+A single-purpose status page for sites under construction or maintenance: one
+HTML file, one CSS file, *no JavaScript*, no web fonts, no build step, no
+network requests.
 
-Imagine your company website is down, the placeholder page has /one critical job/: to load *instantly*, for everyone, every single time, and convey a clear message.
+See the latest version here: https://wip-site.jointhefreeworld.org/
 
-See the latest version of wip-site here:
+* Why this exists
 
-https://wip-site.jointhefreeworld.org/
+When a site is down, the placeholder has one job: load *instantly* for everyone,
+every single time, and say clearly what is happening. Everything else in this
+repository is arranged around that constraint.
 
+- *No dependencies, no build.* ~index.html~ and ~index.css~ are the deployable
+  artefact. Copy them and the page is live. There is nothing to compile, bundle,
+  or keep in sync.
+- *No JavaScript.* Animations, the status console, the progress bar and the
+  pulsing indicators are pure CSS. No script can fail, no third-party request can
+  hang, and the page renders identically from a local file, a CDN or a
+  misconfigured server.
+- *Legible in every state.* Semantic markup, real headings, ~aria~ labels on the
+  progress bar, a visible focus ring, and full support for
+  ~prefers-reduced-motion~ and ~prefers-contrast~.
+- *Cheap to animate.* Only ~transform~, ~opacity~ and gradient positions move, so
+  the effects stay on the compositor and the page does not stutter on a weak
+  device — which is exactly the device someone may be visiting from.
+- *Deployable by copy or by symlink.* Absolute paths on the server are not
+  required and nothing assumes it lives at the domain root.
 
-* Motivation and goals of this project
+* The look
 
-Ultimate Portability: A single vanilla HTML file is the most portable web document in existence. It can be hosted on any web server (Apache, Nginx, etc.) with zero configuration. You can even open it directly from your computer's file system and it will look perfect.
+A dark glass card floating over a slowly drifting grid, with a rotating gold
+hairline, a light sweep across the surface, soft aurora glows, a faint scanline
+and film grain. Inside: a serif headline in warm ivory and gold, monospaced
+labels, a terminal-style status readout, an indeterminate deployment bar and a
+small live-signal equaliser. Quiet, expensive-looking, unmistakably "we are
+working on it".
 
-Zero JavaScript Errors: By loading only some sprinkles of optional, free JavaScript, you eliminate an entire category of potential problems by not depending on bloated Javascript frameworks of the day.
+Everything is driven by design tokens at the top of ~index.css~, so the whole
+mood can be changed by editing a handful of custom properties.
 
-Effortless Deployment: You don't need a complex deployment pipeline, a build step, or command-line tools for wip-site. You just upload some files. This means :
+* Quick start
 
-/anyone, regardless of technical skill, should be able to put the site into maintenance mode/
+Open the page directly — no server needed, no tooling:
+
+#+begin_src shell
+xdg-open index.html        # or: open index.html on macOS
+#+end_src
+
+Prefer a real HTTP server (closer to production, and symlinks behave normally):
+
+#+begin_src shell
+maak serve                 # http://127.0.0.1:8080
+#+end_src
+
+* Deploying
+
+The tasks live in ~maak.scm~ and are run with [[https://codeberg.org/jjba23/maak][maak]]. Publish directory defaults
+to ~/srv/http/wip-site.jointhefreeworld.org~ and can be overridden with the
+~WIP_SITE_DEPLOY_DIR~ environment variable.
+
+** Copy (a snapshot)
+
+#+begin_src shell
+maak deploy
+#+end_src
+
+Copies ~index.html~ and ~index.css~ into the publish directory, creating it if
+needed. Use this when the server is on another machine, when the publish
+directory is served through a container or a read-only filesystem, or when you
+want to decide exactly when the new wording goes live.
+
+To publish somewhere else:
+
+#+begin_src shell
+WIP_SITE_DEPLOY_DIR=/var/www/example.org maak deploy
+#+end_src
+
+** Symlink (live editing)
+
+#+begin_src shell
+maak link
+#+end_src
+
+Replaces the published files with symlinks into this checkout. Edit
+~index.html~ or ~index.css~ and reload the browser: the live page is already
+updated. This is the mode to use during an incident, when the wording of the
+maintenance page changes every few minutes and a copy step is one more thing to
+forget.
+
+Two caveats, both easy to live with:
+
+- The links are absolute, so re-run ~maak link~ if the repository is moved.
+- Some servers refuse to follow symlinks. Check ~disable_symlinks~ in nginx, or
+  ~Options +FollowSymLinks~ in Apache, and note that a hardened systemd unit
+  (~ProtectSystem=~, ~PrivateTmp=~, mount namespaces) can hide the checkout from
+  the web server entirely. If the link resolves but the page 404s, that is
+  usually why.
+
+** Undo
+
+#+begin_src shell
+maak undeploy
+#+end_src
+
+Removes only ~index.html~ and ~index.css~ from the publish directory; the
+directory and anything else in it are left alone.
+
+** Without maak
+
+Nothing here needs a task runner. The deployment is two files:
+
+#+begin_src shell
+# copy
+install -m 644 index.html index.css /srv/http/example.org/
+
+# or symlink
+ln -sf "$PWD/index.html" "$PWD/index.css" /srv/http/example.org/
+#+end_src
+
+* Putting an existing site into maintenance mode
+
+The page uses only relative URLs, so it works from any path — including a
+subdirectory, which is what the snippets below rely on.
+
+** nginx: answer everything with 503
+
+#+begin_src nginx
+server {
+    listen 80;
+    server_name example.org;
+    root /srv/http/example.org;
+
+    # Every request gets "503 Service Unavailable"...
+    location / {
+        return 503;
+    }
+
+    # ...whose body is the status page, stylesheet included.
+    error_page 503 /maintenance/index.html;
+    location /maintenance/ {
+        alias /srv/http/wip-site.jointhefreeworld.org/;
+    }
+}
+#+end_src
+
+A 503 with ~Retry-After~ is the friendly answer for search engines: they keep
+the existing pages indexed and simply come back later. Adding
+~add_header Retry-After 600;~ to the location is a reasonable touch.
+
+** Apache: the same idea
+
+#+begin_src apache
+Alias /maintenance/ /srv/http/wip-site.jointhefreeworld.org/
+ErrorDocument 503 /maintenance/index.html
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/maintenance/
+RewriteRule ^ - [R=503,L]
+#+end_src
+
+** Standalone host
+
+Point ~root~ (or ~DocumentRoot~) at the publish directory with ~index.html~ as
+the index file. No rewrite rules, no modules, no configuration beyond that.
+
+* Customising
+
+| What                                   | Where                                     |
+|----------------------------------------|-------------------------------------------|
+| Headline, copy, status rows, meta text | ~index.html~                              |
+| Colours, type, spacing, radius         | ~:root~ tokens at the top of ~index.css~  |
+| Animation speed and feel               | the ~@keyframes~ block in ~index.css~     |
+| Reduced-motion and contrast behaviour  | the media queries at the end of ~index.css~ |
+
+The status console is three list rows in ~index.html~; add or remove ~<li>~
+elements and the layout follows. If you rename the project, update the
+~SERVICE~ value in the ~<dl class="meta">~ block.
+
+* Files
+
+| File         | Purpose                                                        |
+|--------------|----------------------------------------------------------------|
+| ~index.html~ | The page: markup, copy, decoration layers, inline SVG favicon   |
+| ~index.css~  | Design tokens, layout, and every animation                     |
+| ~maak.scm~   | ~default~, ~deploy~, ~link~, ~undeploy~, ~serve~               |
+| ~COPYING~    | GNU Affero General Public License v3                           |
+| ~README.org~ | This file                                                      |
+
+* Requirements
+
+| Task                 | Needs                                      |
+|----------------------+--------------------------------------------|
+| Viewing the page     | Any modern browser; older engines lose the animations, never the content |
+| ~maak deploy~ / ~link~ | Guile 3 and maak                         |
+| ~maak serve~         | Python 3                                   |
+| Serving it for real  | Any static file server                     |
 
 * Licensing
+:PROPERTIES:
+:CUSTOM_ID: licensing
+:END:
 
-wip-site is free software, licensed under the GNU Affero General Public License v3 or newer.
+This project, and Git repository, and all of its source code are free and open software, licensed under the [[https://opensource.org/license/mit][MIT License]]
+
+The documentation and examples, including this document, which are provided, are all licensed under the [[https://creativecommons.org/licenses/by/4.0/][CC BY 4.0 (Creative Commons Attribution)]] license.

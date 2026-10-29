@@ -1,57 +1,138 @@
 <!--
-    wip-site-template: simple website for pages under construction or maintenance
+   wip-site-template: simple website for pages under construction or maintenance
 
-    Copyright © Josep Bigorra
-    <jjbigorra@gmail.com>
-
-    wip-site-template is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    wip-site-template is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with wip-site-template.  If not, see
-    <https://www.gnu.org/licenses/>.
+   SPDX-License-Identifier: MIT
+   Copyright © Josep Bigorra <jjbigorra@gmail.com>
 -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WIP | Work in progress!</title>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#05060a" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="This site is undergoing scheduled maintenance. We are rebuilding the experience and will be back shortly."
+    />
+    <title>Work in progress · Scheduled maintenance</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23090b11'/%3E%3Cpath d='M26 71 74 29' stroke='%23e3bd7c' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M26 29h13M61 71h13' stroke='%238fd8ff' stroke-width='5' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div class="flex flex-col justify-center align-center items-center pt-12">
-      <div class="content-card">
-        <h1 class="title">🚧 Work in progress!</h1>
-        <p class="description">
-          We're busy building something amazing for you. Our page is
-          <strong class="underline">not available </strong> at the moment.
-        </p>
-        <p>
-          We appreciate your patience and can't wait to show you what we're
-          working on!
-        </p>
-        <div class="footer-note">
-          <p>PLEASE CHECK BACK SOON!</p>
-        </div>
-      </div>
-      <div>
-        <small class="mt-12 extra-small">
-          <em>
-            this very status page is simple, vanilla web technology, see the
-            <a class="source-link" href="https://codeberg.org/jjba23/wip-site"
-              >source code at Codeberg
-            </a>
-          </em>
-        </small>
-      </div>
+    <!-- Ambient decoration: pure CSS, hidden from assistive technology. -->
+    <div class="atmosphere" aria-hidden="true">
+      <div class="atmosphere__grid"></div>
+      <div class="atmosphere__aurora atmosphere__aurora--gold"></div>
+      <div class="atmosphere__aurora atmosphere__aurora--ice"></div>
+      <div class="atmosphere__scan"></div>
+      <div class="atmosphere__noise"></div>
+      <div class="atmosphere__vignette"></div>
     </div>
+
+    <main class="stage">
+      <article class="card">
+        <div class="card__ring" aria-hidden="true"></div>
+        <div class="card__sheen" aria-hidden="true"></div>
+        <div class="card__frame" aria-hidden="true"></div>
+
+        <header class="card__head">
+          <p class="pill">
+            <span class="pill__dot" aria-hidden="true"></span>
+            <span class="pill__label">Scheduled maintenance</span>
+          </p>
+          <p class="stamp" aria-hidden="true">SYS&nbsp;/&nbsp;WIP</p>
+        </header>
+
+        <h1 class="title">Work in <em>progress</em></h1>
+
+        <p class="lede">
+          We are rebuilding this experience from the ground up — sharper,
+          faster, and considered down to the last detail. This page is
+          <strong>temporarily offline</strong> while we finish the work.
+        </p>
+        <p class="lede lede--quiet">
+          Thank you for your patience. It will be worth the wait.
+        </p>
+
+        <dl class="meta">
+          <div class="meta__item">
+            <dt>Service</dt>
+            <dd>wip-site</dd>
+          </div>
+          <div class="meta__item">
+            <dt>State</dt>
+            <dd>Maintenance</dd>
+          </div>
+          <div class="meta__item">
+            <dt>Return</dt>
+            <dd>Soon</dd>
+          </div>
+        </dl>
+
+        <section class="console" aria-label="Maintenance status">
+          <p class="console__cmd">
+            <span class="console__prompt" aria-hidden="true">❯</span>
+            <span>maintenance --status</span>
+            <span class="console__caret" aria-hidden="true"></span>
+          </p>
+          <ul class="console__list">
+            <li class="log">
+              <span class="log__key">build</span>
+              <span class="log__dots" aria-hidden="true"></span>
+              <span class="log__val">rebuilding</span>
+            </li>
+            <li class="log">
+              <span class="log__key">content</span>
+              <span class="log__dots" aria-hidden="true"></span>
+              <span class="log__val">refining</span>
+            </li>
+            <li class="log">
+              <span class="log__key">release</span>
+              <span class="log__dots" aria-hidden="true"></span>
+              <span class="log__val log__val--gold">imminent</span>
+            </li>
+          </ul>
+        </section>
+
+        <div class="load">
+          <div
+            class="load__track"
+            role="progressbar"
+            aria-label="Deployment progress"
+            aria-valuetext="In progress"
+          >
+            <span class="load__bar"></span>
+          </div>
+          <p class="load__meta">
+            <span>Deployment in progress</span>
+            <span>ETA <b>· soon</b></span>
+          </p>
+        </div>
+
+        <footer class="card__foot">
+          <p class="foot__note">Please check back soon</p>
+          <p class="foot__bars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </p>
+        </footer>
+      </article>
+
+      <p class="colophon">
+        <span class="colophon__note">
+          Static status page · vanilla HTML &amp; CSS · no JavaScript
+        </span>
+        <a
+          class="colophon__link"
+          href="https://codeberg.org/jjba23/wip-site"
+          rel="noopener"
+          >Source on Codeberg</a
+        >
+      </p>
+    </main>
   </body>
 </html>
