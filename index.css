@@ -6,20 +6,54 @@
 */
 
 /* ==========================================================================
-   Design tokens
-   Everything visual is driven from here: change a few values, get a new mood.
+   Theme tokens
+   Dark is the base palette, so a browser that knows nothing about
+   `light-dark()' still gets a complete, readable page.  Where `light-dark()'
+   is available every token carries both palettes, and the used palette follows
+   `color-scheme': the operating system by default, or the switch in the card
+   when one of its radios is checked.
+
+   Nothing visual is hard-coded further down: change a token here and the whole
+   page follows, in both themes at once.
    ========================================================================== */
 
 :root {
-  --ink: #05060a;
+  color-scheme: light dark;
+
+  --page: #05060a;
+  --surface: rgba(11, 14, 21, 0.74);
   --line: rgba(236, 222, 195, 0.13);
-  --gold: #e3bd7c;
-  --gold-soft: #f6e3bb;
-  --ice: #8fd8ff;
-  --paper: #f7f1e6;
+  --line-soft: rgba(247, 241, 230, 0.16);
+  --edge: rgba(255, 255, 255, 0.06);
+
+  --text: #f7f1e6;
   --muted: rgba(247, 241, 230, 0.64);
   --muted-soft: rgba(247, 241, 230, 0.42);
-  --radius: 28px;
+
+  --accent: #e3bd7c;
+  --accent-soft: #f6e3bb;
+  --accent-weak: rgba(227, 189, 124, 0.13);
+  --accent-line: rgba(227, 189, 124, 0.32);
+  --cool: #8fd8ff;
+
+  --console: rgba(0, 0, 0, 0.34);
+  --track: rgba(247, 241, 230, 0.1);
+
+  --halo-warm: rgba(227, 189, 124, 0.55);
+  --halo-cool: rgba(96, 166, 224, 0.42);
+  --vignette: rgba(0, 0, 0, 0.58);
+  --sheen: rgba(255, 255, 255, 0.06);
+  --scan: rgba(246, 227, 187, 0.22);
+
+  --shadow: rgba(0, 0, 0, 0.95);
+  --glow: rgba(227, 189, 124, 0.4);
+
+  --title-a: #fff8ea;
+  --title-b: #f6e3bb;
+  --title-c: #b9c6d6;
+
+  --ring-a: rgba(227, 189, 124, 0.85);
+  --ring-b: rgba(143, 216, 255, 0.55);
 
   --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", "IBM Plex Mono",
     Menlo, Consolas, "Liberation Mono", monospace;
@@ -28,14 +62,86 @@
   --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
 
   --ease: cubic-bezier(0.22, 0.72, 0.2, 1);
+  --radius: 28px;
 }
 
-/* Rotating border ring: the angle is interpolated by the browser. Browsers
-   without @property simply paint the static gradient, so nothing breaks. */
+/* The same tokens, now theme-aware. Paper, bronze and ink by day; ink, gold
+   and ice by night. */
+@supports (color: light-dark(#fff, #000)) {
+  :root {
+    --page: light-dark(#f4eee2, #05060a);
+    --surface: light-dark(rgba(255, 253, 248, 0.62), rgba(11, 14, 21, 0.74));
+    --line: light-dark(rgba(88, 68, 38, 0.18), rgba(236, 222, 195, 0.13));
+    --line-soft: light-dark(rgba(88, 68, 38, 0.16), rgba(247, 241, 230, 0.16));
+    --edge: light-dark(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.06));
+
+    --text: light-dark(#2b2318, #f7f1e6);
+    --muted: light-dark(rgba(43, 35, 24, 0.74), rgba(247, 241, 230, 0.64));
+    --muted-soft: light-dark(rgba(43, 35, 24, 0.52), rgba(247, 241, 230, 0.42));
+
+    --accent: light-dark(#a9741f, #e3bd7c);
+    --accent-soft: light-dark(#7a5310, #f6e3bb);
+    --accent-weak: light-dark(rgba(169, 116, 31, 0.12), rgba(227, 189, 124, 0.13));
+    --accent-line: light-dark(rgba(169, 116, 31, 0.35), rgba(227, 189, 124, 0.32));
+    --cool: light-dark(#1f6f7c, #8fd8ff);
+
+    --console: light-dark(rgba(255, 250, 240, 0.66), rgba(0, 0, 0, 0.34));
+    --track: light-dark(rgba(88, 68, 38, 0.14), rgba(247, 241, 230, 0.1));
+
+    --halo-warm: light-dark(rgba(224, 180, 96, 0.5), rgba(227, 189, 124, 0.55));
+    --halo-cool: light-dark(rgba(120, 180, 200, 0.35), rgba(96, 166, 224, 0.42));
+    --vignette: light-dark(rgba(120, 95, 55, 0.2), rgba(0, 0, 0, 0.58));
+    --sheen: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.06));
+    --scan: light-dark(rgba(169, 116, 31, 0.2), rgba(246, 227, 187, 0.22));
+
+    --shadow: light-dark(rgba(95, 74, 42, 0.3), rgba(0, 0, 0, 0.95));
+    --glow: light-dark(rgba(169, 116, 31, 0.22), rgba(227, 189, 124, 0.4));
+
+    --title-a: light-dark(#2f2617, #fff8ea);
+    --title-b: light-dark(#a9741f, #f6e3bb);
+    --title-c: light-dark(#556573, #b9c6d6);
+
+    --ring-a: light-dark(rgba(169, 116, 31, 0.8), rgba(227, 189, 124, 0.85));
+    --ring-b: light-dark(rgba(31, 111, 124, 0.45), rgba(143, 216, 255, 0.55));
+  }
+}
+
+/* The switch: a checked radio forces a scheme, and because every token is a
+   `light-dark()' value it re-resolves on its own.  No script, no class toggling,
+   no flash of the wrong theme. */
+:root:has(#theme-light:checked) {
+  color-scheme: light;
+}
+
+:root:has(#theme-dark:checked) {
+  color-scheme: dark;
+}
+
+/* The border ring rotates by interpolating this angle. */
 @property --ring-angle {
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
+}
+
+/* Registered so the headline gradient can fade between themes instead of
+   snapping: a gradient is not animatable, but the colours inside it are. */
+@property --title-a {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fff8ea;
+}
+
+@property --title-b {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f6e3bb;
+}
+
+@property --title-c {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #b9c6d6;
 }
 
 /* ==========================================================================
@@ -46,6 +152,13 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  /* Theme changes fade rather than blink.  Only colour-ish properties are
+     listed, so nothing here can trigger layout. */
+  transition:
+    background-color 0.45s var(--ease),
+    border-color 0.45s var(--ease),
+    color 0.45s var(--ease),
+    box-shadow 0.45s var(--ease);
 }
 
 html {
@@ -62,12 +175,11 @@ body {
   align-items: center;
   justify-content: center;
   justify-content: safe center;
-  background-color: var(--ink);
+  background-color: var(--page);
   background-image:
-    radial-gradient(120% 90% at 10% -10%, #1a2131 0%, transparent 55%),
-    radial-gradient(90% 80% at 94% 112%, #261e11 0%, transparent 60%),
-    linear-gradient(160deg, #05060a 0%, #080a11 48%, #05060a 100%);
-  color: var(--paper);
+    radial-gradient(120% 90% at 50% -12%, rgba(255, 255, 255, 0.05), transparent 55%),
+    radial-gradient(90% 80% at 50% 112%, rgba(0, 0, 0, 0.12), transparent 60%);
+  color: var(--text);
   font-family: var(--sans);
   font-size: 16px;
   line-height: 1.6;
@@ -84,18 +196,33 @@ dd {
 }
 
 ::selection {
-  background: rgba(227, 189, 124, 0.32);
-  color: #fff;
+  background: var(--accent-weak);
+  color: var(--text);
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ==========================================================================
    Atmosphere: animated grid, auroras, scanline, grain, vignette
+
+   Every layer paints with `currentColor' and takes its colour from a token, so
+   a theme change fades through the transition on `color' instead of jumping.
    ========================================================================== */
 
 .atmosphere {
@@ -112,9 +239,10 @@ dd {
 
 .atmosphere__grid {
   inset: -30%;
+  color: var(--line);
   background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
   background-size: 68px 68px;
   -webkit-mask-image: radial-gradient(
     ellipse 68% 58% at 50% 46%,
@@ -134,7 +262,6 @@ dd {
 .atmosphere__aurora {
   border-radius: 50%;
   filter: blur(80px);
-  mix-blend-mode: screen;
   opacity: 0.55;
   will-change: transform;
 }
@@ -144,11 +271,8 @@ dd {
   height: 46vmax;
   top: -16vmax;
   left: -14vmax;
-  background: radial-gradient(
-    circle at 42% 42%,
-    rgba(227, 189, 124, 0.42),
-    transparent 68%
-  );
+  color: var(--halo-warm);
+  background: radial-gradient(circle at 42% 42%, currentColor, transparent 68%);
   animation: drift-gold 28s ease-in-out infinite;
 }
 
@@ -157,11 +281,8 @@ dd {
   height: 40vmax;
   right: -12vmax;
   bottom: -16vmax;
-  background: radial-gradient(
-    circle at 58% 58%,
-    rgba(96, 166, 224, 0.3),
-    transparent 68%
-  );
+  color: var(--halo-cool);
+  background: radial-gradient(circle at 58% 58%, currentColor, transparent 68%);
   animation: drift-ice 34s ease-in-out infinite;
 }
 
@@ -170,14 +291,15 @@ dd {
   left: 0;
   right: 0;
   height: 30vh;
+  color: var(--scan);
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(246, 227, 187, 0.05) 46%,
-    rgba(246, 227, 187, 0.1) 50%,
-    rgba(246, 227, 187, 0.05) 54%,
+    currentColor 46%,
+    currentColor 54%,
     transparent 100%
   );
+  opacity: 0.6;
   animation: scan-down 12s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   will-change: transform, opacity;
 }
@@ -191,10 +313,11 @@ dd {
 
 .atmosphere__vignette {
   inset: 0;
+  color: var(--vignette);
   background: radial-gradient(
     120% 100% at 50% 46%,
     transparent 32%,
-    rgba(0, 0, 0, 0.58) 100%
+    currentColor 100%
   );
 }
 
@@ -220,19 +343,21 @@ dd {
   padding: clamp(1.6rem, 3.6vw, 2.5rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background:
-    linear-gradient(
-      155deg,
-      rgba(29, 33, 45, 0.9) 0%,
-      rgba(10, 12, 19, 0.94) 60%,
-      rgba(6, 7, 12, 0.96) 100%
-    );
+  /* Frosted glass: a translucent surface over a blurred backdrop, with a
+     neutral light-to-shadow wash for depth. */
+  background-color: var(--surface);
+  background-image: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.14) 100%
+  );
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(22px) saturate(135%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 40px 110px -55px rgba(0, 0, 0, 0.95),
-    0 0 90px -45px rgba(227, 189, 124, 0.4);
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
-  backdrop-filter: blur(18px) saturate(125%);
+    inset 0 1px 0 var(--edge),
+    0 40px 110px -55px var(--shadow),
+    0 0 90px -45px var(--glow);
   animation: rise 1s var(--ease) both;
 }
 
@@ -253,8 +378,8 @@ dd {
     background: conic-gradient(
       from var(--ring-angle),
       transparent 0 58%,
-      rgba(227, 189, 124, 0.85) 74%,
-      rgba(143, 216, 255, 0.55) 82%,
+      var(--ring-a) 74%,
+      var(--ring-b) 82%,
       transparent 92%
     );
     -webkit-mask:
@@ -278,10 +403,11 @@ dd {
   bottom: -60%;
   left: 0;
   width: 42%;
+  color: var(--sheen);
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.055) 50%,
+    currentColor 50%,
     transparent 100%
   );
   transform: rotate(16deg) translate3d(-160%, 0, 0);
@@ -293,22 +419,23 @@ dd {
 .card__frame {
   position: absolute;
   inset: 14px;
-  border-radius: calc(var(--radius) - 12px);
+  border-radius: 16px;
+  color: var(--accent);
   background:
-    linear-gradient(var(--gold), var(--gold)) left top / 16px 1px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) left top / 1px 16px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) right top / 16px 1px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) right top / 1px 16px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) left bottom / 16px 1px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) left bottom / 1px 16px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) right bottom / 16px 1px no-repeat,
-    linear-gradient(var(--gold), var(--gold)) right bottom / 1px 16px no-repeat;
+    linear-gradient(currentColor, currentColor) left top / 16px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) left top / 1px 16px no-repeat,
+    linear-gradient(currentColor, currentColor) right top / 16px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) right top / 1px 16px no-repeat,
+    linear-gradient(currentColor, currentColor) left bottom / 16px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) left bottom / 1px 16px no-repeat,
+    linear-gradient(currentColor, currentColor) right bottom / 16px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) right bottom / 1px 16px no-repeat;
   opacity: 0.5;
   pointer-events: none;
 }
 
 /* ==========================================================================
-   Header: status pill and stamp
+   Header: status pill, stamp, theme switch
    ========================================================================== */
 
 .card__head {
@@ -316,9 +443,15 @@ dd {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: clamp(1.1rem, 2.4vw, 1.6rem);
   animation: rise 0.9s 0.04s var(--ease) both;
+}
+
+.card__aside {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
 }
 
 .pill {
@@ -326,18 +459,14 @@ dd {
   align-items: center;
   gap: 0.6rem;
   padding: 0.42rem 0.9rem 0.42rem 0.72rem;
-  border: 1px solid rgba(227, 189, 124, 0.3);
+  border: 1px solid var(--accent-line);
   border-radius: 999px;
-  background: linear-gradient(
-    180deg,
-    rgba(227, 189, 124, 0.13),
-    rgba(227, 189, 124, 0.03)
-  );
+  background-color: var(--accent-weak);
   font-family: var(--mono);
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold-soft);
+  color: var(--accent-soft);
   white-space: nowrap;
 }
 
@@ -346,7 +475,7 @@ dd {
   height: 7px;
   flex: none;
   border-radius: 50%;
-  background: var(--gold);
+  background-color: var(--accent);
   animation: pulse-dot 2.6s ease-out infinite;
 }
 
@@ -356,6 +485,64 @@ dd {
   letter-spacing: 0.22em;
   color: var(--muted-soft);
   white-space: nowrap;
+}
+
+/* The switch is a three-state radio group: follow the system, light, dark.
+   It only appears where the browser can honour it (see @supports below), so it
+   can never be a button that does nothing. */
+.theme {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background-color: var(--line-soft);
+}
+
+@supports (color: light-dark(#fff, #000)) and (selector(:has(*))) {
+  .theme {
+    display: inline-flex;
+  }
+}
+
+.theme__option {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  color: var(--muted-soft);
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.theme__option:hover {
+  color: var(--text);
+}
+
+.theme__icon {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme__input:checked + .theme__option {
+  color: var(--accent-soft);
+  background-color: var(--accent-weak);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+.theme__input:focus-visible + .theme__option {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* ==========================================================================
@@ -372,16 +559,20 @@ dd {
   letter-spacing: -0.02em;
   background-image: linear-gradient(
     96deg,
-    #fff8ea 0%,
-    var(--gold-soft) 36%,
+    var(--title-a) 0%,
+    var(--title-b) 36%,
     #efe6d6 62%,
-    #b9c6d6 100%
+    var(--title-c) 100%
   );
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 10px 30px rgba(227, 189, 124, 0.16));
+  filter: drop-shadow(0 10px 30px var(--glow));
+  transition:
+    --title-a 0.45s var(--ease),
+    --title-b 0.45s var(--ease),
+    --title-c 0.45s var(--ease);
   animation:
     rise 0.9s 0.1s var(--ease) both,
     title-sheen 14s 1.4s ease-in-out infinite;
@@ -401,7 +592,7 @@ dd {
 }
 
 .lede strong {
-  color: var(--paper);
+  color: var(--text);
   font-weight: 600;
 }
 
@@ -445,7 +636,7 @@ dd {
   font-family: var(--mono);
   font-size: 0.84rem;
   letter-spacing: 0.06em;
-  color: var(--paper);
+  color: var(--text);
 }
 
 /* ==========================================================================
@@ -458,12 +649,13 @@ dd {
   padding: 1.05rem 1.2rem 1.15rem;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: linear-gradient(
+  background-color: var(--console);
+  background-image: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.42),
-    rgba(0, 0, 0, 0.2)
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.02)
   );
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 var(--edge);
   font-family: var(--mono);
   font-size: clamp(0.74rem, 1.5vw, 0.84rem);
   animation: rise 0.9s 0.36s var(--ease) both;
@@ -479,7 +671,7 @@ dd {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(227, 189, 124, 0.55),
+    var(--accent-line),
     transparent
   );
 }
@@ -489,19 +681,19 @@ dd {
   align-items: center;
   gap: 0.55rem;
   margin-bottom: 0.95rem;
-  color: var(--gold-soft);
+  color: var(--accent-soft);
   letter-spacing: 0.02em;
 }
 
 .console__prompt {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 .console__caret {
   display: inline-block;
   width: 0.55ch;
   height: 1.05em;
-  background: var(--gold-soft);
+  background-color: var(--accent-soft);
   animation: blink 1.15s steps(1) infinite;
 }
 
@@ -542,11 +734,11 @@ dd {
 
 .log__dots {
   align-self: center;
-  border-bottom: 1px dashed rgba(247, 241, 230, 0.16);
+  border-bottom: 1px dashed var(--line-soft);
 }
 
 .log__val {
-  color: var(--ice);
+  color: var(--cool);
   white-space: nowrap;
 }
 
@@ -557,12 +749,12 @@ dd {
   height: 5px;
   margin-right: 0.5rem;
   border-radius: 50%;
-  background: currentColor;
+  background-color: currentColor;
   vertical-align: 0.15em;
 }
 
 .log__val--gold {
-  color: var(--gold-soft);
+  color: var(--accent-soft);
   animation: glow 3.4s ease-in-out infinite;
 }
 
@@ -579,7 +771,7 @@ dd {
   position: relative;
   height: 3px;
   border-radius: 999px;
-  background: rgba(247, 241, 230, 0.1);
+  background-color: var(--track);
   overflow: hidden;
 }
 
@@ -591,9 +783,9 @@ dd {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(227, 189, 124, 0.9),
-    var(--gold-soft),
-    rgba(143, 216, 255, 0.8),
+    var(--accent),
+    var(--accent-soft),
+    var(--cool),
     transparent
   );
   animation: bar-sweep 2.9s var(--ease) infinite;
@@ -613,7 +805,7 @@ dd {
 
 .load__meta b {
   font-weight: 500;
-  color: var(--gold-soft);
+  color: var(--accent-soft);
 }
 
 /* ==========================================================================
@@ -636,7 +828,7 @@ dd {
   font-size: 0.7rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold-soft);
+  color: var(--accent-soft);
 }
 
 .foot__bars {
@@ -650,11 +842,7 @@ dd {
   width: 3px;
   height: 100%;
   border-radius: 2px;
-  background: linear-gradient(
-    180deg,
-    var(--gold-soft),
-    rgba(227, 189, 124, 0.35)
-  );
+  background: linear-gradient(180deg, var(--accent-soft), var(--accent));
   transform-origin: bottom;
   animation: bars 1.5s ease-in-out infinite;
 }
@@ -694,7 +882,7 @@ dd {
   position: relative;
   display: inline-block;
   margin-left: 0.9rem;
-  color: var(--gold);
+  color: var(--accent-soft);
   text-decoration: none;
   transition: color 0.3s var(--ease);
 }
@@ -713,7 +901,7 @@ dd {
 }
 
 .colophon__link:hover {
-  color: var(--gold-soft);
+  color: var(--accent);
 }
 
 .colophon__link:hover::after {
@@ -768,10 +956,10 @@ dd {
     transform: translate3d(0, -34vh, 0);
   }
   12% {
-    opacity: 1;
+    opacity: 0.6;
   }
   82% {
-    opacity: 1;
+    opacity: 0.6;
   }
   100% {
     opacity: 0;
@@ -803,13 +991,13 @@ dd {
 
 @keyframes pulse-dot {
   0% {
-    box-shadow: 0 0 0 0 rgba(227, 189, 124, 0.55);
+    box-shadow: 0 0 0 0 var(--accent-line);
   }
   70% {
-    box-shadow: 0 0 0 9px rgba(227, 189, 124, 0);
+    box-shadow: 0 0 0 9px rgba(0, 0, 0, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(227, 189, 124, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }
 
@@ -828,11 +1016,11 @@ dd {
   0%,
   100% {
     opacity: 1;
-    text-shadow: 0 0 14px rgba(227, 189, 124, 0.25);
+    text-shadow: 0 0 14px var(--glow);
   }
   50% {
     opacity: 0.72;
-    text-shadow: 0 0 22px rgba(227, 189, 124, 0.5);
+    text-shadow: 0 0 22px var(--accent-line);
   }
 }
 
@@ -914,6 +1102,14 @@ dd {
     opacity: 0.4;
   }
 
+  .card__head {
+    gap: 0.5rem;
+  }
+
+  .card__aside {
+    gap: 0;
+  }
+
   .pill {
     padding: 0.38rem 0.72rem;
     font-size: 0.6rem;
@@ -922,6 +1118,15 @@ dd {
 
   .stamp {
     display: none;
+  }
+
+  .theme {
+    padding: 2px;
+  }
+
+  .theme__option {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .meta {
@@ -984,8 +1189,9 @@ dd {
 
 @media (prefers-contrast: more) {
   :root {
-    --muted: rgba(247, 241, 230, 0.86);
-    --muted-soft: rgba(247, 241, 230, 0.66);
-    --line: rgba(236, 222, 195, 0.3);
+    --muted: light-dark(rgba(43, 35, 24, 0.92), rgba(247, 241, 230, 0.86));
+    --muted-soft: light-dark(rgba(43, 35, 24, 0.75), rgba(247, 241, 230, 0.66));
+    --line: light-dark(rgba(88, 68, 38, 0.36), rgba(236, 222, 195, 0.3));
+    --line-soft: light-dark(rgba(88, 68, 38, 0.3), rgba(247, 241, 230, 0.26));
   }
 }

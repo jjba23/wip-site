@@ -24,7 +24,7 @@ repository is arranged around that constraint.
   misconfigured server.
 - *Legible in every state.* Semantic markup, real headings, ~aria~ labels on the
   progress bar, a visible focus ring, and full support for
-  ~prefers-reduced-motion~ and ~prefers-contrast~.
+  ~prefers-reduced-motion~, ~prefers-contrast~ and ~prefers-color-scheme~.
 - *Cheap to animate.* Only ~transform~, ~opacity~ and gradient positions move, so
   the effects stay on the compositor and the page does not stutter on a weak
   device — which is exactly the device someone may be visiting from.
@@ -33,7 +33,7 @@ repository is arranged around that constraint.
 
 * The look
 
-A dark glass card floating over a slowly drifting grid, with a rotating gold
+A frosted glass card floating over a slowly drifting grid, with a rotating gold
 hairline, a light sweep across the surface, soft aurora glows, a faint scanline
 and film grain. Inside: a serif headline in warm ivory and gold, monospaced
 labels, a terminal-style status readout, an indeterminate deployment bar and a
@@ -42,6 +42,29 @@ working on it".
 
 Everything is driven by design tokens at the top of ~index.css~, so the whole
 mood can be changed by editing a handful of custom properties.
+
+* Light and dark
+
+The page ships with two palettes and picks one by itself:
+
+- *By default it follows the machine.* ~color-scheme: light dark~ plus
+  ~light-dark()~ tokens mean the page is ink, gold and ice on a dark desktop, and
+  paper, bronze and ink on a light one — decided at first paint, with no flash
+  and no script.
+- *The switch in the card header overrides it.* Three states: auto (follow the
+  system), light, dark. It is a radio group, so arrow keys work, the focus ring
+  lands on the label, and screen readers announce the current choice.
+- *The override lasts for the page view.* There is no JavaScript, so there is
+  nowhere to remember it; reload and the page returns to following the system.
+  That is the intended trade: a status page should never depend on storage, a
+  script, or a first-visit decision made months ago.
+- *The change fades rather than blinks.* Colour-ish properties transition, and
+  the headline gradient is interpolated through registered custom properties, so
+  the whole card cross-fades from one palette to the other.
+- *Browsers that cannot honour it never see it.* The switch only appears where
+  both ~light-dark()~ and ~:has()~ are supported; elsewhere the page simply
+  follows the system preference, and the dark palette remains the fallback for
+  engines that know neither.
 
 * Quick start
 
@@ -174,8 +197,14 @@ the index file. No rewrite rules, no modules, no configuration beyond that.
 |----------------------------------------|-------------------------------------------|
 | Headline, copy, status rows, meta text | ~index.html~                              |
 | Colours, type, spacing, radius         | ~:root~ tokens at the top of ~index.css~  |
+| The light palette                      | the ~light-dark()~ block in ~index.css~   |
 | Animation speed and feel               | the ~@keyframes~ block in ~index.css~     |
 | Reduced-motion and contrast behaviour  | the media queries at the end of ~index.css~ |
+
+Each palette is a set of ~light-dark()~ token values, so a colour is written
+once, as "paper by day, ink by night". Adding a token to the base ~:root~ block
+and its ~light-dark()~ counterpart is all it takes to make something new
+theme-aware.
 
 The status console is three list rows in ~index.html~; add or remove ~<li>~
 elements and the layout follows. If you rename the project, update the
@@ -185,11 +214,14 @@ elements and the layout follows. If you rename the project, update the
 
 | File         | Purpose                                                        |
 |--------------|----------------------------------------------------------------|
-| ~index.html~ | The page: markup, copy, decoration layers, inline SVG favicon   |
-| ~index.css~  | Design tokens, layout, and every animation                     |
+| ~index.html~ | The page: markup, copy, decoration layers, theme switch        |
+| ~index.css~  | Tokens for both themes, layout, and every animation            |
 | ~maak.scm~   | ~default~, ~deploy~, ~link~, ~undeploy~, ~serve~               |
-| ~COPYING~    | GNU Affero General Public License v3                           |
+| ~LICENSE~    | MIT License                                                    |
 | ~README.org~ | This file                                                      |
+
+The CI workflow in ~.github/workflows/~ runs ~maak deploy~ on every push to
+~trunk~, so a merge is a deploy.
 
 * Requirements
 
