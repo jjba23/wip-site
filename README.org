@@ -3,6 +3,9 @@
 #+email: jjbigorra@gmail.com
 #+startup: showall
 
+#+attr_html: :width 160 :alt wip-site logo
+[[file:logo.svg]]
+
 A single-purpose status page for sites under construction or maintenance: one
 HTML file, one CSS file, *no JavaScript*, no web fonts, no build step, no
 network requests.
